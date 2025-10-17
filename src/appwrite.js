@@ -1,6 +1,8 @@
-import  {Client, Databases, Query} from 'appwrite'
+//import  {Client, Databases, Query} from 'appwrite'
+// appwrite.jsx - CORRECTED IMPORT
+import {Client, Databases, Query, ID} from 'appwrite'
 
-const PROJECT_ID = import.meta.env.APPWRITE_PROJECT_ID;
+const PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID;
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
 
@@ -37,4 +39,17 @@ export const updateSearchCount = async (searchTerm, movie) => {
         console.error(error);
     }
     
+}
+
+export const getTrendingMovies = async () => {
+    try{
+      const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
+       Query.limit(5),
+       Query.orderDesc("count")
+      ])
+
+      return result.documents;
+    }catch(error){
+
+    }
 }
